@@ -9,10 +9,7 @@ from common.send_request import SendRequest
 import json
 from ddt import ddt,data,unpack
 from tools.myTools import *
-testData = getExcelDict("C:\\Users\\Lenovo\\PycharmProjects\\FAMCAuto\\testData\\testData.xlsx")
-
-print testData
-
+test_loan_center_interface_data = get_test_case_data("C:\\Users\\Lenovo\\PycharmProjects\\FAMCAuto\\testData\\testData.xlsx","test_loan_center_interface")
 @ddt
 class LoanCenterInterfaceAPI(unittest.TestCase):
     def setUp(self):
@@ -20,16 +17,25 @@ class LoanCenterInterfaceAPI(unittest.TestCase):
     def sendRequest(self,url,dict,header=None):
         result = SendRequest().sendJsonRequests(url,dict,header)
         return json.dumps(json.loads(result)["meta"],ensure_ascii=False)#字典转中文输出
-    @data(*testData)
-    #@unpack
+    @data(*test_loan_center_interface_data)
     def test_loan_center_interface(self,data):
-        result = self.sendRequest(data["url"], json.loads(data["paral"]))
-        self.assertEqual(json.loads(data["except"]),json.loads(result))
+
+        if data["paral"]=="" or data["paral"].encode("utf-8").isspace():
+            result = self.sendRequest(data["url"], " ")
+        else:
+            result = self.sendRequest(data["url"], json.loads(data["paral"]))
+        exception=json.dumps(json.loads(data["except"]), ensure_ascii=False, encoding='UTF-8')#处理字典中文输出显示
+        results=json.dumps(json.loads(result), ensure_ascii=False, encoding='UTF-8')#处理字典中文输出显示
+        self.assertEqual(exception,results)
+
+
 
 
 if __name__=="__main__":
-    #unittest.main()
+    unittest.main()
+    '''
     suite=unittest.TestSuite()
     suite.addTest(LoanCenterInterfaceAPI("test_loan_center_interface"))
     runner=unittest.TextTestRunner()
     runner.run(suite)
+    '''
