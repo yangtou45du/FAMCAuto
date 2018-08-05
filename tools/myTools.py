@@ -53,10 +53,17 @@ def write(list):
     wb.save("C:\Users\Lenovo\PycharmProjects\\testdemo\\testdata\\test_result.xlsx")
 
 def get_dc(string):
-    list=string.split("\n")
-    dc={}
-    for i in list:
-        list1=i.split("=")
-        dc[list1[0]]=list1[1]
+    dc = {}
+    if "\n" in string:
+        list=string.split("\n")
+        for i in list:
+            if "=" in i:
+                list1 = i.split("=")
+                dc[list1[0].replace(" ","")] = list1[1].replace(" ","")
+    else:
+        if "=" in string:
+            list1 = string.split("=")
+            dc[list1[0].replace(" ","")] = list1[1].replace(" ","")
+
     return dc
 

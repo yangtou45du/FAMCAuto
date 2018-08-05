@@ -9,7 +9,7 @@ from common.send_request import SendRequest
 import json
 from ddt import ddt,data,unpack
 from tools.myTools import *
-test_loan_center_interface_data = get_test_case_data("C:\\Users\\Lenovo\\PycharmProjects\\FAMCAuto\\testData\\testData.xlsx","test_loan_center_interface")
+test_loan_center_interface_list = get_test_case_data("C:\\Users\\Lenovo\\PycharmProjects\\FAMCAuto\\testData\\testData.xlsx","test_loan_center_interface")
 @ddt
 class LoanCenterInterfaceAPI(unittest.TestCase):
     def setUp(self):
@@ -17,7 +17,7 @@ class LoanCenterInterfaceAPI(unittest.TestCase):
     def __sendRequest__(self,url,dict,header=None):
         result = SendRequest().sendJsonRequests(url,dict,header)
         return json.dumps(json.loads(result)["meta"],ensure_ascii=False)#字典转中文输出
-    @data(*test_loan_center_interface_data)
+    @data(*test_loan_center_interface_list)
     def test_loan_center_interface(self,data):
         try:
             if data["paral"]=="" or data["paral"].encode("utf-8").isspace():
