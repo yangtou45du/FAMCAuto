@@ -18,16 +18,27 @@ class connectOracle():
             self.cr = self.db.cursor()  # 创建cursor
 
     def sqlSelect(self,sql):
-        self.cr.execute(sql)#z执行sql语句
-        rs=self.cr.fetchall()#一次返回所有结果集
-        self.cr.close()
+        global rs
+        try:
+            self.cr.execute(sql)#z执行sql语句
+            rs=self.cr.fetchall()#一次返回所有结果集
+        except Exception as err:
+            print(err)
+        finally:
+            self.cr.close()
+            self.db.close()
         return rs
     def sqlDML(self,sql):
-        self.cr.execute(sql)  # z执行sql语句
-        rs = self.cr.fetchall()  # 一次返回所有结果集
-        self.cr.close()
-        self.db.commit()
-        print rs
+        global rs
+        try:
+            self.cr.execute(sql)  # z执行sql语句
+            rs = self.cr.fetchall()  # 一次返回所有结果集
+        except Exception as err:
+            print(err)
+        finally:
+            self.cr.close()
+            self.db.commit()
+        return rs
     def sqlFlashBack(self):
         self.cr.execute("select sql_text,last_load_time from v$sql where sql_text like '%update%' order by last_load_time desc")  # 根据SQL执行历史确定数据回滚时间点
         self.cr.execute("alter table tablename enable row movement")#再将数据回滚到需要的时间点
