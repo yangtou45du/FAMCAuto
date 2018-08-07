@@ -12,7 +12,7 @@ from tools.myTools import *
 from conf import *
 test_get_weixin_taobao_info_list = get_test_case_data(filename,"test_get_weixin_taobao_info",1)
 @ddt
-class GetWeiXinTaoBaoInfo(unittest.TestCase):
+class GetWeiXinTaoBaoInfo(unittest.TestCase,SendRequest):
     def setUp(self):
         pass
     def __sendRequest__(self,url,dict,header=None):

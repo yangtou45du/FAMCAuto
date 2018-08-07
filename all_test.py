@@ -3,9 +3,9 @@ import unittest
 from tools import HTMLTestRunner
 import time
 from unittest import TestLoader
+from conf import *
 #用例目录
-test_suite_dir="C:\Users\Lenovo\PycharmProjects\FAMCAuto\\testCase\\"
-report_dir="C:\Users\Lenovo\PycharmProjects\FAMCAuto\\report\\"
+
 def creatsuite():
     testunit=unittest.TestSuite()
     test_dir=test_suite_dir#定义测试文件查找的目录

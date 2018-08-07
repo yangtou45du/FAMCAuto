@@ -1,13 +1,17 @@
 #coding=utf-8
 import json
+#case目录
 filename="C:\\Users\\Lenovo\\PycharmProjects\\FAMCAuto\\testData\\testData.xlsx"
-def dict_ch_show(par):#字典转中文输出
-    if type(par)==unicode:
-        return json.dumps(json.loads(par),ensure_ascii=False, encoding='UTF-8')
-    elif type(par)==dict:
-        return json.dumps(par,ensure_ascii=False, encoding='UTF-8')
-    elif type(par)==str:
-        return json.dumps(eval(par),ensure_ascii=False, encoding='UTF-8')
-    else:
-        print('不能处理该字符串')
+#数据库地址配置
+ORCL_ODS="pcl/Phpcl321@221.236.20.211:15213/orcl"
+wms="wms/wms@112.45.122.19:11521/orcl"
+wms_pro="smsplat/s0splm@221.236.20.212:15212/orcl"
+PH_CS="pcltest/Phtest123@221.236.20.222:15218/orcl"
+#测试用例目录
+test_suite_dir="C:\Users\Lenovo\PycharmProjects\FAMCAuto\\testCase\\"
+#报告目录
+report_dir="C:\Users\Lenovo\PycharmProjects\FAMCAuto\\report\\"
+
+
+
 

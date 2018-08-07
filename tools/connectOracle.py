@@ -2,19 +2,20 @@
 # -*- coding: cp936 -*-
 # -*- coding: encoding -*-
 import cx_Oracle
+from conf import *
 class connectOracle():
     def __init__(self,ora="PH_CS "):
         if ora=="ORCL_ODS":
-            self.db = cx_Oracle.connect("pcl/Phpcl321@221.236.20.211:15213/orcl")  # 连接数据库
+            self.db = cx_Oracle.connect(ORCL_ODS)  # 连接数据库
             self.cr = self.db.cursor()  # 创建cursor
         elif ora=='wms':
-            self.db = cx_Oracle.connect("wms/wms@112.45.122.19:11521/orcl")  # 连接数据库
+            self.db = cx_Oracle.connect(wms)  # 连接数据库
             self.cr = self.db.cursor()  # 创建cursor
         elif ora=='wms_pro':
-            self.db = cx_Oracle.connect("smsplat/s0splm@221.236.20.212:15212/orcl")  # 连接数据库
+            self.db = cx_Oracle.connect(wms_pro)  # 连接数据库
             self.cr = self.db.cursor()  # 创建cursor
         elif ora=='PH_CS':
-            self.db = cx_Oracle.connect("pcltest/Phtest123@221.236.20.222:15218/orcl")  # 连接数据库
+            self.db = cx_Oracle.connect(PH_CS)  # 连接数据库
             self.cr = self.db.cursor()  # 创建cursor
 
     def sqlSelect(self,sql):
