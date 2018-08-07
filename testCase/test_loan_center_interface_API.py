@@ -9,24 +9,27 @@ from common.send_request import SendRequest
 import json
 from ddt import ddt,data,unpack
 from tools.myTools import *
-test_loan_center_interface_list = get_test_case_data("C:\\Users\\Lenovo\\PycharmProjects\\FAMCAuto\\testData\\testData.xlsx","test_loan_center_interface")
+from conf import *
+test_loan_center_interface_list = get_test_case_data(filename,"test_loan_center_interface",1)
+
 @ddt
 class LoanCenterInterfaceAPI(unittest.TestCase):
     def setUp(self):
         pass
     def __sendRequest__(self,url,dict,header=None):
         result = SendRequest().sendJsonRequests(url,dict,header)
-        return json.dumps(json.loads(result)["meta"],ensure_ascii=False)#字典转中文输出
+        return dict_ch_show(json.loads(result)["meta"])#字典转中文输出
     @data(*test_loan_center_interface_list)
     def test_loan_center_interface(self,data):
+        api_url = get_api_url_dict(filename)
+        url = api_url[data['APIName']] + data["url"]
         try:
             if data["paral"]=="" or data["paral"].encode("utf-8").isspace():
-                result = self.__sendRequest__(data["url"], " ")
+                result = self.__sendRequest__(url, " ")
             else:
-                result = self.__sendRequest__(data["url"], json.loads(data["paral"]))
-                print(type(data["url"]))
-            exception=json.dumps(json.loads(data["except"]), ensure_ascii=False, encoding='UTF-8')#处理字典中文输出显示
-            results=json.dumps(json.loads(result), ensure_ascii=False, encoding='UTF-8')#处理字典中文输出显示
+                result = self.__sendRequest__(url, json.loads(data["paral"]))
+            exception=dict_ch_show(data['except'])#处理字典中文输出显示
+            results=dict_ch_show(result)#处理字典中文输出显示
             self.assertEqual(exception,results)
         except Exception as err:
             self.assertIn('ConnectionError', repr(err)[:15])

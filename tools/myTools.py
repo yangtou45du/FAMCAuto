@@ -15,11 +15,12 @@ def get_excel_dict( path, index=0):
     #print firstRowDataList
     for rownum in range(1, sheet.nrows):#循环每一行数据
         list = sheet.row_values(rownum)
+
         #print type(list[3])
         dict={}
         dictTestCaseName={}
         for caseData in list:
-            dict[firstRowDataList[list.index(caseData)]] =caseData #每一行数据与第一行数据对应转为字典
+            dict[firstRowDataList[list.index(caseData)]] =caseData.replace(" ", "") #每一行数据与第一行数据对应转为字典
             #json.dumps(json.loads(caseData), ensure_ascii=False)
         dictTestCaseName[list[2]]=dict#转为字典后与用例名字对应转为字典
         paralList.append(dictTestCaseName)#将处理后的数据放入列表里
@@ -39,6 +40,16 @@ if __name__=="__main__":
     filename="C:\\Users\\Lenovo\\PycharmProjects\\FAMCAuto\\testData\\testData.xlsx"
     testCaseName="test_loan_center_interface"
     print get_test_case_data(filename,testCaseName)
+def get_api_url_dict( path, index=0):
+    dict=[]
+    workbook=xlrd.open_workbook(path)#打开文件
+    sheet=workbook.sheets()[index]#sheet索引从0开始
+    dict = {}
+    for rownum in range(1, sheet.nrows):#循环每一行数据
+        list = sheet.row_values(rownum)
+        for caseData in list:
+            dict[list[0].replace(" ","")] =list[1].replace(" ","")
+    return (dict)
 
 def write_log(msg):
     f=open("C:\\Users\\Lenovo\\PycharmProjects\\testdemo\\testdata\\log.txt","a")
